@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">NewsBreeze</string>
+    <string name="search_text_for_hint_in_search_box">Search</string>
+    <string name="display_news_unknown_author">Unknown Author</string>
+    <string name="no_results_found_for_query">No Results</string>
+    <string name="no_results_long_message">No Results Matching Your Query</string>
+    <string name="save_button_text">Save</string>
+    <string name="delete_button_text">Delete</string>
+</resources>

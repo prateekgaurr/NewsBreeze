@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:id="@+id/root_single_news_view_main"
+    android:layout_height="wrap_content"
+    android:layout_marginVertical="5dp"
+    android:background="@color/br_color_internal_card_view"
+    android:padding="2dp"
+    android:paddingStart="2dp"
+    android:paddingEnd="2dp">
+
+    <ImageView
+        android:id="@+id/news_main_image"
+        android:layout_width="344dp"
+        android:layout_height="208dp"
+        android:layout_marginTop="7dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/news_heading"
+        android:layout_width="344dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/queensbold"
+        android:lineSpacingExtra="10sp"
+        android:paddingLeft="2dp"
+        android:paddingRight="2dp"
+        android:text="The Heading of the concerned nmews is this is the best news is this"
+        android:textColor="@color/dark_color_for_font"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="@+id/news_main_image"
+        app:layout_constraintStart_toStartOf="@+id/news_main_image"
+        app:layout_constraintTop_toBottomOf="@+id/news_main_image" />
+
+    <TextView
+        android:id="@+id/news_description"
+        android:layout_width="344dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/queensnormal"
+        android:lineSpacingExtra="10sp"
+        android:paddingLeft="2dp"
+        android:paddingRight="2dp"
+        android:text="This is the actual news body actually this is will be very long and this is the main body and this is very much long descriptionof the news"
+        android:textColor="@color/dark_color_for_font"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="@+id/news_heading"
+        app:layout_constraintStart_toStartOf="@+id/news_heading"
+        app:layout_constraintTop_toBottomOf="@+id/news_heading" />
+
+    <TextView
+        android:id="@+id/news_pusblished_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:fontFamily="@font/sourcesansregular"
+        android:paddingLeft="2dp"
+        android:paddingRight="2dp"
+        android:text="18/10/2022"
+        android:textColor="@color/text_color_light_brown"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="@+id/news_description"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/news_description"
+        app:layout_constraintTop_toBottomOf="@+id/news_description" />
+
+    <Button
+        android:id="@+id/news_read_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/button_bg"
+
+        android:text="Read"
+        app:backgroundTint="@color/my_green"
+        app:cornerRadius="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/news_pusblished_date"
+        app:layout_constraintTop_toBottomOf="@+id/news_pusblished_date" />
+
+    <Button
+        android:id="@+id/news_save_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="7dp"
+        android:background="@drawable/button_bg"
+        android:text="Save"
+        app:backgroundTint="@color/my_green"
+        app:cornerRadius="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/news_description"
+        app:layout_constraintStart_toEndOf="@+id/news_read_button"
+        app:layout_constraintTop_toTopOf="@+id/news_read_button" />
+</androidx.constraintlayout.widget.ConstraintLayout>

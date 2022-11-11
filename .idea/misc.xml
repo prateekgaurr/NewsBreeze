@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/prateekp/AndroidStudioProjects/NewsBreeze/app/src/main/res/drawable/bg_day_view_linear_15_dp_radius.xml" value="0.1895" />
+        <entry key="..\:/Users/prateekp/AndroidStudioProjects/NewsBreeze/app/src/main/res/drawable/button_bg.xml" value="0.1895" />
+        <entry key="..\:/Users/prateekp/AndroidStudioProjects/NewsBreeze/app/src/main/res/drawable/my_divider.xml" value="0.1895" />
+        <entry key="..\:/Users/prateekp/AndroidStudioProjects/NewsBreeze/app/src/main/res/drawable/round_bg_green.xml" value="0.3465" />
+        <entry key="..\:/Users/prateekp/AndroidStudioProjects/NewsBreeze/app/src/main/res/drawable/search_bar_bg.xml" value="0.3455" />
+        <entry key="..\:/Users/prateekp/AndroidStudioProjects/NewsBreeze/app/src/main/res/drawable/seperator_bg_2_radious.xml" value="0.3455" />
+        <entry key="..\:/Users/prateekp/AndroidStudioProjects/NewsBreeze/app/src/main/res/drawable/sort_by_disbled.xml" value="0.1755" />
+        <entry key="..\:/Users/prateekp/AndroidStudioProjects/NewsBreeze/app/src/main/res/drawable/sort_by_enabled.xml" value="0.1755" />
+        <entry key="..\:/Users/prateekp/AndroidStudioProjects/NewsBreeze/app/src/main/res/drawable/upper_round_corners.xml" value="0.1745" />
+        <entry key="..\:/Users/prateekp/AndroidStudioProjects/NewsBreeze/app/src/main/res/layout/activity_display_news.xml" value="0.25" />
+        <entry key="..\:/Users/prateekp/AndroidStudioProjects/NewsBreeze/app/src/main/res/layout/activity_main.xml" value="0.7113970588235294" />
+        <entry key="..\:/Users/prateekp/AndroidStudioProjects/NewsBreeze/app/src/main/res/layout/activity_saved_articles.xml" value="0.2" />
+        <entry key="..\:/Users/prateekp/AndroidStudioProjects/NewsBreeze/app/src/main/res/layout/my_seperator.xml" value="0.67" />
+        <entry key="..\:/Users/prateekp/AndroidStudioProjects/NewsBreeze/app/src/main/res/layout/single_day_saved_articles_view.xml" value="0.33" />
+        <entry key="..\:/Users/prateekp/AndroidStudioProjects/NewsBreeze/app/src/main/res/layout/single_day_wise_list_view.xml" value="0.18229166666666666" />
+        <entry key="..\:/Users/prateekp/AndroidStudioProjects/NewsBreeze/app/src/main/res/layout/single_news_view.xml" value="0.33" />
+        <entry key="..\:/Users/prateekp/AndroidStudioProjects/NewsBreeze/app/src/main/res/layout/single_saved_news_view.xml" value="0.33" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>

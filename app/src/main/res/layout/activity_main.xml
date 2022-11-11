@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/my_bg_color"
+    tools:context=".ui.activities.MainActivity">
+
+    <ImageView
+        android:id="@+id/newsbreeze_logo"
+        android:layout_width="159dp"
+        android:layout_height="44dp"
+        android:layout_marginStart="36.44dp"
+        android:layout_marginTop="41dp"
+        android:layout_marginEnd="216.56dp"
+        android:src="@drawable/newsbreeze_log"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/saved_icon"
+        android:layout_width="37.77dp"
+        android:layout_height="37dp"
+        android:layout_marginStart="306.38dp"
+        android:layout_marginEnd="34.11dp"
+        android:background="@drawable/round_bg_green"
+        app:layout_constraintBottom_toBottomOf="@+id/newsbreeze_logo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="15.81dp"
+        android:layout_height="18.69dp"
+        android:src="@drawable/saved_2"
+        app:layout_constraintBottom_toBottomOf="@+id/saved_icon"
+        app:layout_constraintEnd_toEndOf="@+id/saved_icon"
+        app:layout_constraintStart_toStartOf="@+id/saved_icon"
+        app:layout_constraintTop_toTopOf="@+id/saved_icon" />
+
+    <View
+        android:id="@+id/view2"
+        android:layout_width="344dp"
+        android:layout_height="44dp"
+        android:layout_marginStart="34dp"
+        android:layout_marginTop="70.89dp"
+        android:layout_marginEnd="34dp"
+        android:background="@drawable/search_bar_bg"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/newsbreeze_logo" />
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="16.23dp"
+        android:layout_height="16.23dp"
+        android:layout_marginStart="18.04dp"
+        android:src="@drawable/search"
+        app:layout_constraintBottom_toBottomOf="@+id/view2"
+        app:layout_constraintStart_toStartOf="@+id/view2"
+        app:layout_constraintTop_toTopOf="@+id/view2" />
+
+    <ImageView
+        android:id="@+id/sort_by_icon"
+        android:layout_width="17.5dp"
+        android:layout_height="17.5dp"
+        android:layout_marginTop="13.93dp"
+        android:layout_marginEnd="18.48dp"
+        android:layout_marginBottom="14.01dp"
+        android:src="@drawable/sort_by_icon"
+        app:layout_constraintBottom_toBottomOf="@+id/view2"
+        app:layout_constraintEnd_toEndOf="@+id/view2"
+        app:layout_constraintTop_toTopOf="@+id/view2" />
+
+    <EditText
+        android:id="@+id/search_box"
+        android:layout_width="230dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:background="@android:color/transparent"
+        android:ems="10"
+        android:hint="@string/search_text_for_hint_in_search_box"
+        android:inputType="textPersonName"
+        android:lines="1"
+        android:minLines="1"
+        android:outlineProvider="none"
+        android:singleLine="true"
+        android:textColorHint="@color/text_color_light_brown"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/view2"
+        app:layout_constraintStart_toStartOf="@+id/view2"
+        app:layout_constraintTop_toTopOf="@+id/view2" />
+
+    <View
+        android:id="@+id/initial_seperator"
+        android:layout_width="290dp"
+        android:layout_height="5dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="9dp"
+        android:layout_marginEnd="62dp"
+
+        android:background="@drawable/my_divider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view2" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/main_news_recycler_view"
+        android:layout_width="352dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/initial_seperator" />
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintBottom_toBottomOf="@+id/view2"
+        app:layout_constraintEnd_toStartOf="@+id/sort_by_icon"
+        app:layout_constraintTop_toTopOf="@+id/view2" />
+
+    <View
+        android:id="@+id/sortByIconLayer"
+        android:layout_width="23dp"
+        android:layout_height="19dp"
+        app:layout_constraintBottom_toBottomOf="@+id/sort_by_icon"
+        app:layout_constraintEnd_toEndOf="@+id/sort_by_icon"
+        app:layout_constraintStart_toStartOf="@+id/sort_by_icon" />
+
+    <LinearLayout
+        android:id="@+id/erro_or_failed_parent"
+        android:layout_width="352dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="212dp"
+        android:orientation="vertical"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            app:srcCompat="@drawable/error" />
+
+        <TextView
+            android:id="@+id/error_short_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="TextView"
+            android:textColor="#EF0E0E"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/error_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="TextView" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
