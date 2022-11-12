@@ -40,5 +40,3 @@ Saved Articles View
 4. Offline Database: Room Database
 
 
-APK Link : https://drive.google.com/file/d/1JUPNNUgFJ9150UGW2T_pKES-BlCO3nk7/view?usp=share_link
-
