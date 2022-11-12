@@ -4,9 +4,16 @@ An unofficial News Application using NewsApi.org
 Please use your token and update the same in Config file.
 
 # Sceeenshots
+Search View
 <div align="center"><img src="ss1.jpg"></div>
+
+News Article View
 <div align="center"><img src="ss2.jpg"></div>
+
+News Article View
 <div align="center"><img src="ss3.jpg"></div>
+
+Saved Articles View
 <div align="center"><img src="ss4.jpg"></div>
 
 
