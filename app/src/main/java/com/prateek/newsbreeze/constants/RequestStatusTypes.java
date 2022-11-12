@@ -1,4 +1,4 @@
-package com.prateek.newsbreeze.models;
+package com.prateek.newsbreeze.constants;
 
 public enum RequestStatusTypes {
     PROCESSING,

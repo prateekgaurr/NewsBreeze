@@ -1,6 +1,7 @@
 package com.prateek.newsbreeze.retrofit;
 
 import com.prateek.newsbreeze.MyApp;
+import com.prateek.newsbreeze.constants.Config;
 
 import java.io.File;
 
@@ -10,8 +11,6 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitHelper {
-
-    private static final String TAG = "RetrofitHelper";
 
     private static RetrofitHelper instance;
 

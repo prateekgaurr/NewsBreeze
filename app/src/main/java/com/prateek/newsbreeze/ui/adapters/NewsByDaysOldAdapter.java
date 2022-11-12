@@ -42,9 +42,9 @@ public class NewsByDaysOldAdapter extends RecyclerView.Adapter<NewsByDaysOldAdap
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         int index = (position > articleListByDaysOld.keySet().size()) ? position-1 : position;
-        Long daysOldNo = (long) articleListByDaysOld.keySet().toArray()[index];
+        long daysOldNo = (long) articleListByDaysOld.keySet().toArray()[index];
 
-        String daysOld = "";
+        String daysOld;
 
         if(daysOldNo == 0)
             daysOld = "Today";
@@ -56,7 +56,7 @@ public class NewsByDaysOldAdapter extends RecyclerView.Adapter<NewsByDaysOldAdap
 
         holder.binding.dayViewDayName.setText(daysOld);
         holder.binding.dayViewArticlesRecyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
-        holder.binding.dayViewArticlesRecyclerView.setAdapter(new SavedNewsAdapter(context, listener, articleListByDaysOld.get(daysOldNo)));
+        holder.binding.dayViewArticlesRecyclerView.setAdapter(new SavedNewsAdapter(listener, articleListByDaysOld.get(daysOldNo)));
     }
 
     @Override
@@ -71,6 +71,7 @@ public class NewsByDaysOldAdapter extends RecyclerView.Adapter<NewsByDaysOldAdap
             binding = SingleDayWiseListViewBinding.bind(itemView);
         }
     }
+
 
     public void updateData(Map<Long, List<Article>> articleListByDaysOld){
         this.articleListByDaysOld = articleListByDaysOld;

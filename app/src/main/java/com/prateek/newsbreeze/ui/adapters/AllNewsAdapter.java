@@ -46,7 +46,8 @@ public class AllNewsAdapter extends RecyclerView.Adapter<AllNewsAdapter.NewsView
         Article article = articleList.get(position);
         holder.binding.newsHeading.setText(article.title);
         holder.binding.newsDescription.setText(article.description);
-        holder.binding.newsPusblishedDate.setText(DateUtils.toDisplayDate(article.publishedAt));
+        String source = (article.source == null || article.source.name == null) ? "Unknown Source" : article.source.name;
+        holder.binding.newsPusblishedDate.setText(DateUtils.toDisplayDate(article.publishedAt)+" by "+source);
         if(article.urlToImage != null) {
             try{
                 Picasso.get().load(article.urlToImage)
@@ -63,13 +64,7 @@ public class AllNewsAdapter extends RecyclerView.Adapter<AllNewsAdapter.NewsView
 
     @Override
     public int getItemCount() {
-        if(articleList == null) {
-            MyLogger.d(TAG, "List was null, returned size 0");
-            return 0;
-        }
-        else {
-            return articleList.size();
-        }
+        return (articleList == null) ? 0 : articleList.size();
     }
 
     public void setArticlesToBeDisplayed(List<Article> articles){
@@ -99,7 +94,9 @@ public class AllNewsAdapter extends RecyclerView.Adapter<AllNewsAdapter.NewsView
                     break;
 
                 case R.id.news_save_button:
-                    listener.onNewsSaveButtonClicked(articleList.get(index), binding.newsSaveButton);
+                    listener.onNewsSaveButtonClicked(articleList.get(index));
+                    articleList.get(index).isAlreadySaved = true;
+                    binding.newsSaveButton.setText(R.string.saved_button_text);
                     break;
 
             }

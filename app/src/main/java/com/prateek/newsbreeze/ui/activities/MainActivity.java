@@ -1,7 +1,6 @@
 package com.prateek.newsbreeze.ui.activities;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -9,8 +8,6 @@ import android.os.Looper;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.lifecycle.ViewModelProvider;
@@ -19,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.prateek.newsbreeze.R;
 import com.prateek.newsbreeze.constants.PassNews;
+import com.prateek.newsbreeze.constants.SortingTypes;
 import com.prateek.newsbreeze.databinding.ActivityMainBinding;
 import com.prateek.newsbreeze.interfaces.NewsAdapterListener;
 import com.prateek.newsbreeze.models.Article;
@@ -30,6 +28,7 @@ import com.prateek.newsbreeze.room.ArticlesDao;
 import com.prateek.newsbreeze.room.ArticlesDatabase;
 import com.prateek.newsbreeze.ui.adapters.AllNewsAdapter;
 import com.prateek.newsbreeze.util.MyLogger;
+import com.prateek.newsbreeze.util.SortArticles;
 import com.prateek.newsbreeze.viewmodel.NewsViewModel;
 import com.prateek.newsbreeze.viewmodel.NewsViewModelFactory;
 import com.prateek.newsbreeze.viewmodel.SavedArticlesViewModel;
@@ -43,6 +42,8 @@ public class MainActivity extends BaseActivity implements NewsAdapterListener {
     private ActivityMainBinding binding;
     private List<Article> articleList;
     private SavedArticlesViewModel savedArticlesViewModel;
+    private SortingTypes sortingType = SortingTypes.SORT_BY_DATE;
+    private AllNewsAdapter adapter;
 
 
     @SuppressLint("RestrictedApi")
@@ -53,10 +54,6 @@ public class MainActivity extends BaseActivity implements NewsAdapterListener {
         setContentView(binding.getRoot());
         final String TAG = getClass().getSimpleName();
 
-        hideKeyboard();
-
-        MyLogger.d(TAG, "Main Activity Started, Network Calling");
-
         NewsService newsService = RetrofitHelper.getInstance().getApi();
         NewsRepository newsRepository = new NewsRepository(newsService);
         NewsViewModelFactory newsViewModelFactory = new NewsViewModelFactory(newsRepository);
@@ -65,9 +62,9 @@ public class MainActivity extends BaseActivity implements NewsAdapterListener {
                 newsViewModelFactory
         ).get(NewsViewModel.class);
 
-        MyLogger.d(TAG, "Viewmodel INitialized");
+        MyLogger.d(TAG, "Viewmodel Initialized");
 
-        AllNewsAdapter adapter = new AllNewsAdapter(articleList, this);
+        adapter = new AllNewsAdapter(articleList, this);
         binding.mainNewsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         binding.mainNewsRecyclerView.setAdapter(adapter);
         DividerItemDecoration decoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
@@ -80,11 +77,12 @@ public class MainActivity extends BaseActivity implements NewsAdapterListener {
             MyLogger.d(TAG, "API RESPONSE RECEIVED");
             if(newsCallResponse != null) {
                 MyLogger.d(TAG, newsCallResponse.status + " and no of entries are" + newsCallResponse.totalResults);
-                    adapter.setArticlesToBeDisplayed(newsCallResponse.articles);
+                articleList = newsCallResponse.articles;
                     if(newsCallResponse.status.equals("error")){
                         binding.errorShortMessage.setText(newsCallResponse.code);
                         binding.errorDescription.setText(newsCallResponse.message);
                     }
+                    updateData();
             }
             else {
                 MyLogger.d(TAG, "currently null");
@@ -100,28 +98,25 @@ public class MainActivity extends BaseActivity implements NewsAdapterListener {
 
                 case FAILED:
                     binding.progressBar.setVisibility(View.INVISIBLE);
-                    binding.erroOrFailedParent.setVisibility(View.VISIBLE);
+                    binding.errorOrListEmptyParent.setVisibility(View.VISIBLE);
                     binding.mainNewsRecyclerView.setVisibility(View.INVISIBLE);
                     break;
 
                 case COMPLETED:
                     binding.progressBar.setVisibility(View.INVISIBLE);
                     binding.mainNewsRecyclerView.setVisibility(View.VISIBLE);
-                    binding.erroOrFailedParent.setVisibility(View.INVISIBLE);
+                    binding.errorOrListEmptyParent.setVisibility(View.INVISIBLE);
                     break;
 
                 case EMPTY:
                     binding.mainNewsRecyclerView.setVisibility(View.INVISIBLE);
-                    binding.erroOrFailedParent.setVisibility(View.VISIBLE);
+                    binding.errorOrListEmptyParent.setVisibility(View.VISIBLE);
                     binding.errorShortMessage.setText(R.string.no_results_found_for_query);
                     binding.errorDescription.setText(R.string.no_results_long_message);
                     break;
             }
         });
 
-        binding.sortByIcon.setOnClickListener(v -> {
-            //TODO
-        });
 
         binding.searchBox.addTextChangedListener(new TextWatcher() {
             @Override
@@ -153,16 +148,22 @@ public class MainActivity extends BaseActivity implements NewsAdapterListener {
                 this,
                 savedArticlesViewModelFactory
         ).get(SavedArticlesViewModel.class);
+
+        binding.sortByIcon.setOnClickListener(v->{
+            if(sortingType == SortingTypes.SORT_BY_PUBLISHER){
+                sortingType = SortingTypes.SORT_BY_DATE;
+                Toast.makeText(this, "Sorting by Date", Toast.LENGTH_SHORT).show();
+            }else{
+                sortingType = SortingTypes.SORT_BY_PUBLISHER;
+                Toast.makeText(this, "Sorting By Publisher", Toast.LENGTH_SHORT).show();
+            }
+            updateData();
+        });
     }
 
-    private void hideKeyboard() {
-        InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
-        View view = getCurrentFocus();
-        if (view == null)
-            view = new View(this);
-        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    private void updateData(){
+        adapter.setArticlesToBeDisplayed(SortArticles.sortArticles(articleList, sortingType));
     }
-
 
     @Override
     public void onNewsItemClicked(Article article) {
@@ -172,7 +173,7 @@ public class MainActivity extends BaseActivity implements NewsAdapterListener {
         intent.putExtra(PassNews.KEY_NEWS_CONTENT, article.description+"  "+article.content);
         intent.putExtra(PassNews.KEY_NEWS_DATE, article.publishedAt.toString());
         intent.putExtra(PassNews.KEY_DESCRIPTION, article.description);
-//        intent.putExtra(PassNews.KEY_LISTENER, (NewsAdapterListener)this);
+        intent.putExtra(PassNews.KEY_IS_ALREADY_SAVED, article.isAlreadySaved);
         if(article.source !=null && article.source.name != null)
             intent.putExtra(PassNews.KEY_AUTHOR_ORGANIZATION, article.source.name);
         if(article.urlToImage != null)
@@ -181,15 +182,17 @@ public class MainActivity extends BaseActivity implements NewsAdapterListener {
     }
 
     @Override
-    public void onNewsSaveButtonClicked(Article article, Button button) {
-        ExecutorService executor = Executors.newSingleThreadExecutor();
-        Handler handler = new Handler(Looper.getMainLooper());
-        executor.execute(() -> {
-            savedArticlesViewModel.insertInDb(article);
-            handler.post(() -> Toast.makeText(MainActivity.this, "Article Saved in Saved Articles", Toast.LENGTH_SHORT).show());
-            button.setClickable(false);
-            button.setText(R.string.save_button_text);
-        });
-
+    public void onNewsSaveButtonClicked(Article article) {
+        if(article.isAlreadySaved){
+            Toast.makeText(this, "Already Saved", Toast.LENGTH_SHORT).show();
+        }else{
+            ExecutorService executor = Executors.newSingleThreadExecutor();
+            Handler handler = new Handler(Looper.getMainLooper());
+            executor.execute(() -> {
+                savedArticlesViewModel.insertInDb(article);
+                article.isAlreadySaved = true;
+                handler.post(() -> Toast.makeText(MainActivity.this, "Article Saved", Toast.LENGTH_SHORT).show());
+            });
+        }
     }
 }

@@ -4,7 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
 import com.prateek.newsbreeze.models.NewsCallResponse;
-import com.prateek.newsbreeze.models.RequestStatusTypes;
+import com.prateek.newsbreeze.constants.RequestStatusTypes;
 import com.prateek.newsbreeze.retrofit.NewsService;
 import com.prateek.newsbreeze.util.MyLogger;
 
@@ -37,7 +37,7 @@ public class NewsRepository {
                 handleApiResponse(response);
             }
             @Override
-            public void onFailure(Call<NewsCallResponse> call, Throwable t) {
+            public void onFailure(@NonNull Call<NewsCallResponse> call, @NonNull Throwable t) {
                 handleApiFailedResponse(t);
             }
         });
@@ -51,7 +51,7 @@ public class NewsRepository {
                 MyLogger.d(TAG, "Response received from API successfully but empty, List Size is "+response.body().totalResults);
                 requestStatusTypesMutableLiveData.setValue(RequestStatusTypes.EMPTY);
             }
-            else if(response.body().status.equals("ok") && response.body().totalResults > 0) {
+            else if(response.body().status.equals("ok")) {
                 MyLogger.d(TAG, "Response received from API successfully and setted to live data, List Size is "+response.body().totalResults);
                 requestStatusTypesMutableLiveData.setValue(RequestStatusTypes.COMPLETED);
                 responseLiveData.setValue(response.body());
@@ -67,7 +67,7 @@ public class NewsRepository {
             responseLiveData.setValue(new NewsCallResponse(
                     "error",
                     0,
-                    "Response Code = "+response.code()+ "   "+response.toString(),
+                    "Response Code = "+response.code()+ "   "+ response,
                     "Some Issue Occurred in Connecting to Server"));
         }
     }
@@ -82,7 +82,7 @@ public class NewsRepository {
             }
 
             @Override
-            public void onFailure(Call<NewsCallResponse> call, Throwable t) {
+            public void onFailure(@NonNull Call<NewsCallResponse> call, @NonNull Throwable t) {
                handleApiFailedResponse(t);
             }
         });

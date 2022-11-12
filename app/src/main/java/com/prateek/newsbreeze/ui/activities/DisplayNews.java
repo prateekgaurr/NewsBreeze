@@ -48,6 +48,14 @@ public class DisplayNews extends BaseActivity{
         );
 
         isAlreadySaved = getIntent().getBooleanExtra(PassNews.KEY_IS_ALREADY_SAVED, false);
+        if(!isAlreadySaved){
+            try {
+                this.isAlreadySaved = article.isAlreadySaved;
+            }
+            catch (NullPointerException e) {
+                e.printStackTrace();
+            }
+        }
 
         if(isAlreadySaved){
             binding.viewNewsSaveButton.setText(R.string.delete_button_text);
@@ -86,9 +94,7 @@ public class DisplayNews extends BaseActivity{
                 savedArticlesViewModelFactory
         ).get(SavedArticlesViewModel.class);
 
-        binding.viewNewsSaveButton.setOnClickListener(v->{
-            saveDeleteButtonClicked();
-        });
+        binding.viewNewsSaveButton.setOnClickListener(v-> saveDeleteButtonClicked());
 
     }
 

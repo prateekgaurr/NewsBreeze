@@ -135,7 +135,7 @@
         app:layout_constraintStart_toStartOf="@+id/sort_by_icon" />
 
     <LinearLayout
-        android:id="@+id/erro_or_failed_parent"
+        android:id="@+id/error_or_list_empty_parent"
         android:layout_width="352dp"
         android:layout_height="0dp"
         android:layout_marginTop="212dp"

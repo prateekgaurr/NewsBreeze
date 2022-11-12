@@ -5,18 +5,45 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/my_bg_color"
-    tools:context=".ui.activities.SavedArticles"><![CDATA[
+    tools:context=".ui.activities.SavedArticles">
 
 
+    <LinearLayout
+        android:id="@+id/empty_list_parent"
+        android:layout_width="352dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="212dp"
+        android:orientation="vertical"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
+        <ImageView
+            android:id="@+id/imageView_empty"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            app:srcCompat="@drawable/error" />
 
-        " />
+        <TextView
+            android:id="@+id/saved_empty_list_short"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="No Results!"
+            android:textColor="#EF0E0E"
+            android:textSize="16sp" />
 
-
-
-
-
-    ]]>
+        <TextView
+            android:id="@+id/saved_empty_list_long"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="Come back here after saving any article" />
+    </LinearLayout>
 
     <TextView
         android:id="@+id/saved_text"
@@ -93,13 +120,5 @@
             android:textColorHint="@color/text_color_light_brown"
             android:textSize="18sp" />
 
-        <ImageView
-            android:id="@+id/sort_by_icon2"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_gravity="right|center_vertical"
-            android:layout_marginRight="10dp"
-            android:foregroundGravity="center_vertical|right"
-            android:src="@drawable/sort_by_icon" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

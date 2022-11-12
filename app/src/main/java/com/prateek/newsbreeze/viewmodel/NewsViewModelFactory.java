@@ -13,7 +13,7 @@ public class NewsViewModelFactory implements ViewModelProvider.Factory {
 
     public NewsViewModelFactory(NewsRepository repository){
         this.repository = repository;
-    };
+    }
 
     @NonNull
     @Override

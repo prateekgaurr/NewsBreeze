@@ -11,7 +11,7 @@ import com.prateek.newsbreeze.room.SourceConvertor;
 import java.util.Date;
 
 @Entity(tableName = "saved_articles", indices = {@Index(value = "title", unique = true)})
-public class Article{
+public class Article implements Comparable<Article>{
 
     @PrimaryKey(autoGenerate = true)
     public int id;
@@ -22,6 +22,9 @@ public class Article{
 
     @ColumnInfo(name = "author")
     public String author;
+
+    @ColumnInfo(name = "is_already_saved")
+    public boolean isAlreadySaved;
 
     @ColumnInfo(name = "title")
     public String title;
@@ -53,5 +56,10 @@ public class Article{
         this.urlToImage = urlToImage;
         this.publishedAt = publishedAt;
         this.content = content;
+    }
+
+    @Override
+    public int compareTo(Article article) {
+        return this.publishedAt.compareTo(article.publishedAt);
     }
 }

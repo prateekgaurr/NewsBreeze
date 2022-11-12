@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.prateek.newsbreeze.repository.NewsRepository;
 import com.prateek.newsbreeze.repository.SavedArticlesRepository;
 
 public class SavedArticlesViewModelFactory implements ViewModelProvider.Factory {
@@ -13,7 +12,7 @@ public class SavedArticlesViewModelFactory implements ViewModelProvider.Factory 
 
     public SavedArticlesViewModelFactory(SavedArticlesRepository repository){
         this.repository = repository;
-    };
+    }
 
     @NonNull
     @Override

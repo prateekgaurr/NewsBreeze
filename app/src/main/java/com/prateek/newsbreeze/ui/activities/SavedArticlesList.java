@@ -10,9 +10,9 @@ import android.os.Handler;
 import android.os.Looper;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.View;
 import android.widget.Toast;
 
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -26,6 +26,7 @@ import com.prateek.newsbreeze.room.ArticlesDao;
 import com.prateek.newsbreeze.room.ArticlesDatabase;
 import com.prateek.newsbreeze.ui.adapters.NewsByDaysOldAdapter;
 import com.prateek.newsbreeze.util.DateUtils;
+import com.prateek.newsbreeze.util.MyLogger;
 import com.prateek.newsbreeze.viewmodel.SavedArticlesViewModel;
 import com.prateek.newsbreeze.viewmodel.SavedArticlesViewModelFactory;
 
@@ -38,17 +39,18 @@ import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 
 public class SavedArticlesList extends BaseActivity implements SavedArticleClickListener {
-    private ActivitySavedArticlesBinding binding;
     private SavedArticlesViewModel viewModel;
     private Map<Long, List<Article>> articlesListGrouped;
     private Date todayDate;
     private List<Article> articles = new ArrayList<>();
     private NewsByDaysOldAdapter adapter;
+    public static final String TAG = "Saved Article List Activity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivitySavedArticlesBinding.inflate(getLayoutInflater());
+        com.prateek.newsbreeze.databinding.ActivitySavedArticlesBinding binding
+                = ActivitySavedArticlesBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         binding.backButton.setOnClickListener(v->{
@@ -61,47 +63,54 @@ public class SavedArticlesList extends BaseActivity implements SavedArticleClick
         snackBar.setAction("OK", v -> snackBar.dismiss());
         snackBar.show();
 
+        // initializing recycler view
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         adapter = new NewsByDaysOldAdapter(articlesListGrouped, this, this);
         binding.recyclerViewForDaysOldView.setLayoutManager(linearLayoutManager);
         binding.recyclerViewForDaysOldView.setAdapter(adapter);
+        binding.recyclerViewForDaysOldView.setNestedScrollingEnabled(false);
 
-
+        // initializing dao, repository, and viewmodel from viewmodel factory
         todayDate = new Date();
         ArticlesDao dao = ArticlesDatabase.getInstance(this.getApplicationContext()).dao();
         SavedArticlesRepository savedArticlesRepository = new SavedArticlesRepository(dao);
         SavedArticlesViewModelFactory savedArticlesViewModelFactory = new SavedArticlesViewModelFactory(savedArticlesRepository);
-
         viewModel = new ViewModelProvider(this,
                 savedArticlesViewModelFactory)
                 .get(SavedArticlesViewModel.class);
 
-        viewModel.getAllArticles().observe(this, articles -> {
-            this.articles = articles;
-            articlesListGrouped = groupArticlesAgain();
-            adapter.updateData(articlesListGrouped);
+        // regularly observe all articles
+        viewModel.getAllArticles()
+                .observe(this, articles -> {
+                    this.articles = articles;
+                    if(articles == null || articles.size() < 1)
+                        binding.emptyListParent.setVisibility(View.VISIBLE);
+                    else{
+                        adapter.updateData(groupArticlesAgain());
+                        binding.emptyListParent.setVisibility(View.INVISIBLE);
+                    }
         });
 
 
+
+        // when typing on search edit text
         binding.searchBox2.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
             }
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 if(charSequence == null || charSequence.toString().length() < 1) {
+                    // no text in search box, bring all data
+                    MyLogger.d(TAG, "going to search from all data");
                     viewModel.getAllArticles();
-                    groupArticlesAgain();
+                    adapter.updateData(groupArticlesAgain());
                 }
                 else{
-                    viewModel.getFilteredArticles(charSequence.toString()).observe(SavedArticlesList.this, new Observer<List<Article>>() {
-                        @Override
-                        public void onChanged(List<Article> articles) {
-                            SavedArticlesList.this.articles = articles;
-                            articlesListGrouped = groupArticlesAgain();
-                        }
+                    viewModel.getFilteredArticles(charSequence.toString()).observe(SavedArticlesList.this, articles -> {
+                        SavedArticlesList.this.articles = articles;
+                        adapter.updateData(groupArticlesAgain());
                     });
                 }
 
@@ -109,7 +118,8 @@ public class SavedArticlesList extends BaseActivity implements SavedArticleClick
 
             @Override
             public void afterTextChanged(Editable editable) {
-
+                MyLogger.d(TAG, "After Text changed");
+                adapter.updateData(groupArticlesAgain());
             }
         });
 
@@ -118,7 +128,8 @@ public class SavedArticlesList extends BaseActivity implements SavedArticleClick
     private Map<Long, List<Article>> groupArticlesAgain() {
                 return articlesListGrouped = articles
                         .stream()
-                        .collect(Collectors.groupingBy(
+                        .collect(Collectors
+                                .groupingBy(
                                 article -> DateUtils.calculateNoOfDays(article.publishedAt, todayDate)));
     }
 

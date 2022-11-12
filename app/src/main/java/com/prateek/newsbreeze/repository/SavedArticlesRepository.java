@@ -8,7 +8,7 @@ import com.prateek.newsbreeze.room.ArticlesDao;
 import java.util.List;
 
 public class SavedArticlesRepository {
-    private ArticlesDao dao;
+    private final ArticlesDao dao;
     private LiveData<List<Article>> articles;
 
     public SavedArticlesRepository(ArticlesDao dao){
